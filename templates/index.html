@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <title>Heart Disease Predictor</title>
+    <style>
+        body { font-family: Arial; padding: 30px; background:#5596bb; }
+        input, select { padding: 8px; margin: 5px; width: 100%; }
+        .container { max-width: 533px; margin: auto; background: #8ec2d6; color:Maroon; padding: 20px; border-radius: 10px; }
+        .h2 { text-align: center; }
+        .result { text-align: center; margin-top: 20px; }
+        .mb-3 {display:ruby-text;}
+    </style>
+</head>
+<body>
+    <h1  class="container text-center ">Heart Disease Risk Prediction</h1>
+    <div class="container text-center">   
+        <div class="mb-3">
+            <br></br><button type="button" class="btn btn-success" onclick="fillTestData('low')">Low Risk Patient</button>
+            <br></br><button type="button" class="btn btn-warning" onclick="fillTestData('medium')">Medium Risk Patient</button>
+            <br></br><button type="button" class="btn btn-danger" onclick="fillTestData('high')">High Risk Patient</button>
+          </div>
+          {% if risk_level %}
+          <div class="alert alert-{{ risk_class }} mt-4" role="alert">
+            <h4 class="alert-heading">Prediction Result</h4>
+            <p><strong>Probability:</strong> {{ probability }}%</p>
+            <hr>
+            <p class="mb-0">{{ risk_level }}</p>
+          </div>
+        {% endif %}
+        <form method="POST">
+            <label>Age</label><input class="rounded-pill" type="number" name="age" required>
+            <label>Sex (1=Male, 0=Female)</label><input class="rounded-pill" type="number" name="sex" min="0" max="1" required>
+            <label>Chest Pain Type (0-3)</label><input class="rounded-pill" type="number" name="cp" min="0" max="3" required>
+            <label>Resting BP</label><input class="rounded-pill" type="number" name="trestbps" required>
+            <label>Cholesterol</label><input class="rounded-pill" type="number" name="chol" required>
+            <label>Fasting Blood Sugar > 120? (1=Yes, 0=No)</label><input class="rounded-pill" type="number" name="fbs" min="0" max="1" required>
+            <label>Resting EKG (0=Normal, 1=ST-T, 2=LVH)</label><input class="rounded-pill" type="number" name="restecg" min="0" max="2" required>
+            <label>Max Heart Rate</label><input class="rounded-pill" type="number" name="thalach" required>
+            <label>Exercise Angina (1=Yes, 0=No)</label><input class="rounded-pill" type="number" name="exang" min="0" max="1" required>
+            <label>Oldpeak</label><input class="rounded-pill" type="number" step="0.1" name="oldpeak" required>
+            <label>Slope (0=Upsloping, 1=Flat, 2=Downsloping)</label><input class="rounded-pill" type="number" name="slope" min="0" max="2" required>
+            <label>Major Vessels (0-3)</label><input class="rounded-pill" type="number" name="ca" min="0" max="3" required>
+            <label>Thal (1=Normal, 2=Fixed Defect, 3=Reversible)</label><input class="rounded-pill" type="number" name="thal" min="1" max="3" required>
+            <br></br>
+            <div class ="d-grid gap-2 col-11 mx-auto"><button type="submit" class="btn btn-outline-dark rounded-pill">Predict</button></div>
+    </form>
+        
+<script>
+  function fillTestData(level) {
+    const testData = {
+      low: [38, 0, 1, 115, 180, 0, 0, 175, 0, 0.2, 0, 0, 1],
+      medium: [58, 1, 2, 140, 250, 1, 1, 150, 0, 1.5, 1, 1, 2],
+      high: [65, 1, 3, 160, 300, 1, 2, 120, 1, 3.0, 2, 2, 3]
+    };
+
+    const fields = [
+      "age", "sex", "cp", "trestbps", "chol", "fbs", "restecg",
+      "thalach", "exang", "oldpeak", "slope", "ca", "thal"
+    ];
+
+    fields.forEach((field, i) => {
+      document.getElementsByName(field)[0].value = testData[level][i];
+    });
+  }
+</script>
+
+    </div>
+</body>
+</html>
