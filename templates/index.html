@@ -32,6 +32,10 @@
             <p><strong>Probability:</strong> {{ probability }}%</p>
             <hr>
             <p class="mb-0">{{ risk_level }}</p>
+            {% if risk_class != 'success' %}
+            <br><a class="mb-1 btn btn-info"  type="button" href="https://www.google.com/maps/search/cardiologist+hospital+near+me">
+              Visit your Nearest cardiologists</a>
+              {% endif %}
           </div>
         {% endif %}
         <form method="POST">
@@ -53,7 +57,7 @@
     </form>
         
 <script>
-  function fillTestData(level) {
+  function fillTestData(level) { 
     const testData = {
       low: [38, 0, 1, 115, 180, 0, 0, 175, 0, 0.2, 0, 0, 1],
       medium: [58, 1, 2, 140, 250, 1, 1, 150, 0, 1.5, 1, 1, 2],
